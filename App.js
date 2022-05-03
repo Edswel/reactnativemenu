@@ -9,6 +9,7 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
+import FavoritesContextProvider from './store/context/favorite-context';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,27 +45,29 @@ export default function App() {
   return (
     <>
       <StatusBar style='dark' />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerStyle: { backgroundColor: '#ddd' },
-          headerTintColor: '#000',
-          contentStyle: { backgroundColor: '#eee' }
-        }}>
-          <Stack.Screen
-            name='Drawer'
-            component={DrawerNavigator}
-            options={{
-              headerShown: false
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: '#ddd' },
+            headerTintColor: '#000',
+            contentStyle: { backgroundColor: '#eee' }
+          }}>
+            <Stack.Screen
+              name='Drawer'
+              component={DrawerNavigator}
+              options={{
+                headerShown: false
+              }} />
+            <Stack.Screen
+              name='MealsOverview'
+              component={MealsOverviewScreen}
+            />
+            <Stack.Screen name='MealDetail' component={MealDetailScreen} options={{
+              title: "Meal's Detail"
             }} />
-          <Stack.Screen
-            name='MealsOverview'
-            component={MealsOverviewScreen}
-          />
-          <Stack.Screen name='MealDetail' component={MealDetailScreen} options={{
-            title: "Meal's Detail"
-          }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
